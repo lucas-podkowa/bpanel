@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use SimpleXMLElement;
 
 class XmlController extends Controller
@@ -21,30 +24,58 @@ class XmlController extends Controller
         $xml = simplexml_load_file($url);
 
         $nodes = $xml->children();
+        $filas = array();
+        $personas = $microfonos = $reuniones = 0;
         //echo $nodes;
         foreach ($nodes->meetings as $meets) {
             foreach ($meets as $m) {
-                echo 'Nombre de la clase: '.$m->meetingName.'<br />';
-                echo '¿Grabando?: '.$m->recording.'<br />';
-                echo 'Cantidad de participantes: '.$m->participantCount.'<br />';
-                echo 'Microfonos Abiertos: '.$m->voiceParticipantCount.'<br />';
+                ; 
+                $moderadores = array();
                 
+                $nombreSesion = $m->meetingName;
                 
-                //$participantes =$m->children();
-                //echo $m->attendees->attendee->fullName;
-               
+                //$creado = $m->createTime;
+                $p = date_parse($m->createDate) ;
+                $fecha = date('Y-m-d H:i:s', mktime($p['hour'], $p['minute'], $p['second'], $p['month'], $p['day'], $p['year'])); 
+                
+
+                dd($fecha);
+
+                //$grabando = ($m->recording) ? 'Si' : 'No' ;
+                $cantParticipantes = $m->participantCount;
+                $microfonosAbiertos = $m->voiceParticipantCount;
+                $reuniones ++;
+                $microfonos +=$microfonosAbiertos;
+                $personas +=$cantParticipantes;
+                
                foreach ($m->attendees->attendee as $p) {
-                    //echo $p->fullName;
                     if ($p->role == 'MODERATOR') {
-                        echo 'Moderador: '.$p->fullName.'<br />';
+                        array_push($moderadores, $p->fullName);
                     }
                 }
-
-                echo '<br />';
-                //echo $m->meetingName.'<br />';
+                
+               $fila = compact('nombreSesion', 'cantParticipantes', 'microfonosAbiertos', 'moderadores');
+               array_push($filas, $fila);
             }
             
         }
+        $totales = compact('personas', 'reuniones', 'microfonos');
+        //dd($totales);
+        
+        $title = date_format(date_create(), 'd/m/Y H:i a');
+        
+        return view('sesiones', compact('filas', 'title', 'totales'));
+    }
+
+    public function respaldar(){
+        $url = 'https://bbb.fio.unam.edu.ar/bigbluebutton/api/getMeetings?checksum=7af8345722fb7dcdd1baa3a26342c5092842820f';
+        //$url= "file:///home/lucas/Documentos/bpanel/public/reuniones.xml";
+        $xml = simplexml_load_file($url);
+
+        $nodes = $xml->children();
+        $filas = array();
+        $personas = $microfonos = $reuniones = 0;
+        
     }
 }
 
