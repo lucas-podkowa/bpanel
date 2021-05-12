@@ -15,6 +15,7 @@ class Asistentes extends Migration
     {
         Schema::create('asistente', function (Blueprint $table ) {
             $table->increments('asistente_id');
+            $table->unsignedSmallInteger('user_id')->nullable(false);
             $table->unsignedInteger('sala_id')->nullable(false);
             $table->string('full_name', 100)->nullable(false);
             $table->string('role', 10)->nullable(false);

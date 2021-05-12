@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('cabecera')
 
 @section('content')
     <h1>
@@ -9,14 +9,17 @@
     <table class="table table-hover" >
        
         <thead class="thead-dark">
+            <th>Contexto (Curso de origen)</th>
             <th>Nombre de la Sala</th>
             <th>Moderadores</th>
             <th>Nº de Participantes</th>
-            <th>Micrófonos Abiertos</th>
         </thead>
         <tbody >
             @forelse ($filas as $f)
                 <tr>
+                    <td>
+                        {{$f['moodle_context']}}
+                    </td>
                     <td>
                         {{$f['nombreSesion']}}
                     </td>
@@ -27,12 +30,18 @@
                             </li>  
                         @endforeach
                     </td>          
+
                     <td>
-                        {{$f['cantParticipantes']}}
+                        <button type="button" class="btn btn-info" >
+                            <strong>
+                                <a href="{{ route('asistentes.show', 2)}}">
+                                    {{$f['cantParticipantes']}}
+                                </a> 
+                            </strong>
+                        </button>
+                        
                     </td>
-                    <td>
-                        {{$f['microfonosAbiertos']}}
-                    </td>
+
                 </tr>   
             @empty
                 <td>No existen sesiones activas</td>
@@ -47,7 +56,7 @@
             Total de participantes: <b>{{$totales['personas']}}</b>
          </div>
          <div class="alert alert-primary" role="alert">
-            Microfonos habilitados: <b>{{$totales['microfonos']}}</b>
+            Microfonos con permiso de activación: <b>{{$totales['microfonos']}}</b>
          </div>
     </div>
 @endsection

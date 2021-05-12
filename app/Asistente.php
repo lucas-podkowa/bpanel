@@ -10,10 +10,12 @@ class Asistente extends Model
     use HasFactory;
 
     protected $table = 'asistente';
-    public $timestamps = false;
+    protected $primaryKey = 'asistente_id';
+    public $timestamps = false;    
+    protected $fillable = ['user_id', 'sala_id', 'full_name','role'];
 
-    public function sala()    {
+    public function sala()
+    {
         return $this->belongsTo(Sala::class);
     }
-
 }

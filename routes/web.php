@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AsistenteController;
+use App\Http\Controllers\SalaController;
 use App\Http\Controllers\XmlController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [XmlController::class, 'index']);
 Route::get('/ver', [XmlController::class, 'show']);
 Route::get('/sesiones', [XmlController::class, 'sesiones']);
+
+Route::get('/a', [SalaController::class, 'actualizar']);
+Route::get('/show', [SalaController::class, 'show']);
+Route::get('/sala', [SalaController::class, 'index']);
+
+Route::get('/asistentes', [AsistenteController::class, 'index'])->name('asistentes.index');
+Route::get('/asistentes/store', [AsistenteController::class, 'store'])->name('asistentes.store');
+Route::get('/asistentes/{show}', [AsistenteController::class, 'show'])->name('asistentes.show');
+
 
 
 //ruta estatica
