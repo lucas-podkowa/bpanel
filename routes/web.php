@@ -18,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 
 //ruta utilizando controlador. llamo a la clase que contiene el metodo pasado como parametro en un array
-Route::get('/', [XmlController::class, 'index']);
+Route::get('/', [XmlController::class, 'index'])->name('sesiones.index');
+Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
+
 Route::get('/ver', [XmlController::class, 'show']);
-Route::get('/sesiones', [XmlController::class, 'sesiones']);
+//Route::get('/sesiones', [XmlController::class, 'sesiones']);
 
 Route::get('/a', [SalaController::class, 'actualizar']);
 Route::get('/show', [SalaController::class, 'show']);
-Route::get('/sala', [SalaController::class, 'index']);
+
 
 Route::get('/asistentes', [AsistenteController::class, 'index'])->name('asistentes.index');
 Route::get('/asistentes/store', [AsistenteController::class, 'store'])->name('asistentes.store');

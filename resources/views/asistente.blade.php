@@ -1,7 +1,7 @@
-@extends('cabecera')
+@extends('layout')
 
 @section('content')
-
+    
 <table class="table table-sm" >
     <thead class="thead-dark">
         <th>Nombre y Apellido</th>

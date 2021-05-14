@@ -10,9 +10,6 @@ class AsistenteController extends Controller
 {
     public function index()
     {
-        //$salas = Asistente::get();
-        //$salas = Asistente::paginate(10);
-
         //$url = 'https://bbb.fio.unam.edu.ar/bigbluebutton/api/getMeetings?checksum=7af8345722fb7dcdd1baa3a26342c5092842820f';
         $url = "file:///home/lucas/Documentos/bpanel/public/reuniones.xml";
         $xml = simplexml_load_file($url);

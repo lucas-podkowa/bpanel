@@ -3,7 +3,7 @@
 @section('content')
     <h1>
         {{$title}}
-        <button type="button" class="btn btn-info">Actualizar</button>
+        {{--  <button type="button" class="btn btn-info">Actualizar</button>  --}}
     </h1>    
 
     <table class="table table-hover" >
@@ -34,7 +34,7 @@
                     <td>
                         <button type="button" class="btn btn-info" >
                             <strong>
-                                <a href="{{ route('asistentes.show', 2)}}">
+                                <a href="{{ route('asistentes.show', ['sesion_id'=> $f['moderadores']])}}">
                                     {{$f['cantParticipantes']}}
                                 </a> 
                             </strong>

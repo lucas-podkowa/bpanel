@@ -13,16 +13,6 @@ class XmlController extends Controller
 {
     public function index()
     {
-        return "bienvenido a la pagina principal mediante controlador";
-    }
-
-    public function show()
-    {
-        return "pagina pasando un segundo metodo como controlador";
-    }
-
-    public function sesiones()
-    {
         $url = 'https://bbb.fio.unam.edu.ar/bigbluebutton/api/getMeetings?checksum=7af8345722fb7dcdd1baa3a26342c5092842820f';
         //$url = "file:///home/lucas/Documentos/bpanel/public/reuniones.xml";
         $xml = simplexml_load_file($url);
@@ -35,11 +25,11 @@ class XmlController extends Controller
             foreach ($meets as $m) {;
                 $moderadores = array();
                 $nombreSesion = $m->meetingName;
+                $sesionID = $m->sesionID;
 
-                
                 $context = 'bbb-context';
                 $moodle_context = $m->metadata->$context;
-                
+
                 $p = date_parse($m->createDate);
                 $fecha = date('Y-m-d H:i:s', mktime($p['hour'], $p['minute'], $p['second'], $p['month'], $p['day'], $p['year']));
 
@@ -55,7 +45,7 @@ class XmlController extends Controller
                     }
                 }
 
-                $fila = compact('nombreSesion', 'cantParticipantes', 'moderadores', 'moodle_context');
+                $fila = compact('nombreSesion', 'cantParticipantes', 'moderadores', 'moodle_context','sesionID');
                 array_push($filas, $fila);
             }
         }
@@ -67,9 +57,7 @@ class XmlController extends Controller
         return view('sesiones', compact('filas', 'title', 'totales'));
     }
 
-  
-
-              /**** asistentes de la sala 
+    /**** asistentes de la sala 
                 $moderadores = $asistentes = array();
                 foreach ($m->attendees->attendee as $p) {
                     $full_name = $p->fullName;
@@ -78,11 +66,6 @@ class XmlController extends Controller
                     array_push($asistentes, $asistente);
                 }
                 array_push($todos, $asistentes);
-              ****/
-
-/** los objetos como Sala y  Asistente se llaman desde aqui, es decir, un Model se llama desde un conrtroller**/
-
-        //return view('sesiones', compact('filas', 'title', 'totales'));
+     ****/
     
-
 }
