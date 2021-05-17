@@ -1,6 +1,8 @@
 <?php
 
+use App\Sala;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 
 /*

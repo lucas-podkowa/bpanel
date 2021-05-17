@@ -33,12 +33,6 @@
     {{-- <!-- Bootstrap4 Duallistbox --> --}}
     <link rel="stylesheet"
         href="{{ asset('assets/lte3/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
-
-
-
-
-
-
 </head>
 
 <body>
@@ -92,6 +86,26 @@
     <script>
         $(function() {
             $('#example').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+            });
+        });
+        $(function() {
+            $('#rtimetable').DataTable({
+                "paging": false,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+            });
+        });
+        $(function() {
+            $('#asisttable').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,

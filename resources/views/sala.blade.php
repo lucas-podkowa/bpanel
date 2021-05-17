@@ -8,15 +8,6 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group">
-                <div class="input-group">
-                    <button type="button" class="btn btn-default float-right" id="daterange-btn">
-                        <i class="far fa-calendar-alt"></i> Período a filtrar
-                        <i class="fas fa-caret-down"></i>
-                    </button>
-                </div>
-            </div>
-
             <table id="example" class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -50,7 +41,7 @@
                             </td>
                         </tr>
                     @empty
-                        <li>No hay salas para mostrar</li>
+                        <ul>No hay salas para mostrar</ul>
                     @endforelse
                 </tbody>
 

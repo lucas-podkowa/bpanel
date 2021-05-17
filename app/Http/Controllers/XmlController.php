@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Sala;
-use DateTime;
-use Illuminate\Database\DBAL\TimestampType;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
-use SimpleXMLElement;
+use DateTimeZone;
 
 class XmlController extends Controller
 {
     public function index()
     {
         $url = 'https://bbb.fio.unam.edu.ar/bigbluebutton/api/getMeetings?checksum=7af8345722fb7dcdd1baa3a26342c5092842820f';
-        //$url = "file:///home/lucas/Documentos/bpanel/public/reuniones.xml";
         $xml = simplexml_load_file($url);
 
         $nodes = $xml->children();
@@ -25,7 +19,7 @@ class XmlController extends Controller
             foreach ($meets as $m) {;
                 $moderadores = array();
                 $nombreSesion = $m->meetingName;
-                $sesionID = $m->sesionID;
+                $meetingID = $m->meetingID;
 
                 $context = 'bbb-context';
                 $moodle_context = $m->metadata->$context;
@@ -45,27 +39,14 @@ class XmlController extends Controller
                     }
                 }
 
-                $fila = compact('nombreSesion', 'cantParticipantes', 'moderadores', 'moodle_context','sesionID');
+
+                $fila = compact('nombreSesion', 'cantParticipantes', 'moderadores', 'moodle_context', 'meetingID');
                 array_push($filas, $fila);
             }
         }
         $totales = compact('personas', 'reuniones', 'microfonos');
-        //dd($totales);
 
-        $title = date_format(date_create(), 'd/m/Y H:i a');
-
+        $title = (date_format(date_create()->setTimezone(new DateTimeZone("America/Argentina/Buenos_Aires")), 'd/m/Y | H:i'));
         return view('sesiones', compact('filas', 'title', 'totales'));
     }
-
-    /**** asistentes de la sala 
-                $moderadores = $asistentes = array();
-                foreach ($m->attendees->attendee as $p) {
-                    $full_name = $p->fullName;
-                    $role = $p->role;
-                    $asistente = compact('full_name', 'role');
-                    array_push($asistentes, $asistente);
-                }
-                array_push($todos, $asistentes);
-     ****/
-    
 }
