@@ -14,7 +14,7 @@
                         <th>Nombre de la Sala</th>
                         <th>Contexto</th>
                         <th>Nº de Participantes</th>
-                        <th>Como Oyentes</th>
+                        {{--  <th>Como Oyentes</th>  --}}
                         <th>Fecha de Creación</th>
                     </tr>
                 </thead>
@@ -33,9 +33,9 @@
                                     <strong>{{ $s->participant_count }}</strong>
                                 </a>
                             </td>
-                            <td>
+                            {{--  <td>
                                 {{ $s->listener_count }}
-                            </td>
+                            </td>  --}}
                             <td>
                                 {{ $s->create_date }}
                             </td>
